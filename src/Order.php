@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Moscow');
 
 class Order
 {
@@ -19,7 +20,8 @@ class Order
 
         return $orders;
     }
-
+    //Этот метод создан для того чтобы выбрать заказ из базы по id
+    /*
     public static function getById($id)
     {
         $stmt = self::$pdo->prepare("SELECT * FROM order_self WHERE id = ?");
@@ -28,7 +30,7 @@ class Order
         $order = $stmt->fetch();
 
         return $order;
-    }
+    }*/
 
     public static function create($orderName,$created_at,$updated_at,$status)
     {
@@ -41,26 +43,38 @@ class Order
         ]);
         $row = $stmt->rowCount();
         return $row;
+
     }
 
-    public static function chekLimit($created_at)
-    {
-        $half_day = strtotime(date('Y-m-d').' 12:00:00');
-        $created_at = strtotime($limit->created_at);
-
-        if ($created_at < $half_day) {
-            return "лимит не превышен";
-        } else {
-            return "лимит превышен";
-        }
-        exit();
-    }
-
-    public function updateStatus($newStatus) {
-        $this->status = $newStatus;
-        $this->updated_at = date('Y-m-d H:i:s');
+    public static function updateStatus($newStatus, $id) {
+        $status = $newStatus;
+        $updated_at = date('Y-m-d H:i:s');
         // Обновление статуса в базе данных
-        $stmt = self::$pdo>prepare('UPDATE order_self SET status = ?, updated_at = ? WHERE id = ?');
-        $stmt->execute([$newStatus, $this->updated_at, $this->id]);
+        $stmt = self::$pdo->prepare('UPDATE order_self SET status = ?, updated_at = ? WHERE id = ?');
+        $stmt->execute([$status, $updated_at, $id]);
     }
+
+    public static function chekLimit($created_at, $id)
+    {
+
+          $timestap = strtotime($created_at);
+          $hour = date('H:i:s', $timestap);
+
+          echo $hour;
+
+        if ($hour > 0 && $hour < "12:00" ) {
+            $newStatus = "лимит не превышен";
+            self::updateStatus($newStatus, $id);
+        } else {
+            $newStatus = "лимит превышен";
+            self::updateStatus($newStatus, $id);
+        }
+    }
+
+    public static function delete($id){
+        $stmt=self::$pdo->prepare("DELETE FROM order_self WHERE id=:id");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
 }

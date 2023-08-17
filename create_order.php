@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Moscow');
 
 require_once 'config/layout.php';
 
@@ -10,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $status = 'новый';
 
     Order::create($orderName,$created_at,$updated_at,$status);
+    header('location:index.php');
 }
 
 ?>
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body>
 <div class="container" style="margin-top: 100px; border: solid 3px black;;">
     <div class="container" style="text-align: center; margin-bottom: 30px; margin-top: 25px" >
-        <h3>Все заказы</h3>
+        <h3>Добавить новый заказ-</h3>
     </div>
     <div class="container">
         <form method="post" style="margin-bottom: 10px">

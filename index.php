@@ -40,16 +40,19 @@ $orders = Order::getAll();
             </thead>
             <tbody>
             <?php
+            $i = 0;
             foreach ($orders as $row):
+                $i++;
                 ?>
                 <tr>
-                    <th><?= $row->id ?></th>
+                    <th><?= $i; ?></th>
                     <td><?= $row->orderName ?></td>
                     <td><?= $row->created_at ?></td>
                     <td><?= $row->updated_at ?></td>
                     <td><?= $row->status ?></td>
                     <td>
-                        <a href="order.php?id=<?= $row->id ?>" class="btn btn-outline-info" style="margin: 10px;">Посмотреть</a>
+                        <a href="limit.php?id=<?= $row->id ?>&create_at=<?= $row->created_at ?>" class="btn btn-outline-info" style="margin: 10px;">Проверить на лимит</a>
+                        <a href="delete.php?id=<?= $row->id ?>" class="btn btn-outline-danger" style="margin: 10px;">Удалить</a>
                     </td>
                 </tr>
             <?php endforeach;?>

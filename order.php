@@ -1,5 +1,7 @@
 <?php
+//Этот файл не нужен из начально хотел проверить заказ в этом файле но потом передумал. В принципе этот файл тоже рабочий можно посмотреть каждый заказь отдельно.
 
+/*
 require_once 'config/layout.php';
 
 $order_id = $_GET['id'];
@@ -34,6 +36,7 @@ $order = Order::getById($order_id);
         <table class="table">
             <thead>
             <tr>
+                <th scope="col">№</th>
                 <th scope="col">Название заказа</th>
                 <th scope="col">Дата и время создания</th>
                 <th scope="col">Дата и время последнего изменения</th>
@@ -43,12 +46,13 @@ $order = Order::getById($order_id);
             </thead>
             <tbody>
                 <tr>
+                    <td><?= $order_id; ?></td>
                     <td><?= $order->orderName; ?></td>
                     <td><?= $order->created_at; ?></td>
                     <td><?= $order->updated_at; ?></td>
                     <td><?= $order->status;?></td>
                     <td>
-                        <a href="limit.php?id=<?= $order->id;?>&create_at=<?= $order->created_at; ?>" class="btn btn-outline-info" style="margin: 10px;">Проверка на лимит</a>
+                        <a href="limit.php?id=<?= $order_id;?>&create_at=<?= $order->created_at; ?>" class="btn btn-outline-info" style=" margin: 10px;">Проверка на лимит</a>
                     </td>
                 </tr>
             </tbody>
@@ -61,4 +65,4 @@ $order = Order::getById($order_id);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
 </html>
-
+*/
